@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailBukuActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tugas_counter_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="MissingConstraints">
+    </android.support.v7.widget.Toolbar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="780dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="20dp"
+            android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="10dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="180dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/buku_terjual2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Harga"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/terjual"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="30sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Stok"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/stok"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="30sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_centerHorizontal="true"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="5dp"
+                        app:cardBackgroundColor="@color/colorPrimaryDark"
+                        app:cardCornerRadius="10dp">
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:layout_marginTop="10dp"
+                            android:text="Detail Buku"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="18sp">
+                        </TextView>
+                    </android.support.v7.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageViewJudul"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_book_blue_24dp" />
+
+                        <TextView
+                            android:id="@+id/juduljudul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Judul Buku"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="18sp">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/judul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/poppins_light"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorGrayDark"
+                        android:textSize="14sp">
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageViewsinopsi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_book_blue_24dp" />
+
+                        <TextView
+                            android:id="@+id/sinopsisjudul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Sinopsis"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="18sp">
+                        </TextView>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/sinopsis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/poppins_light"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorGrayDark"
+                        android:textSize="14sp">
+                    </TextView>
+
+                    <!--                        <LinearLayout-->
+                    <!--                            android:layout_width="match_parent"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_marginTop="20dp"-->
+                    <!--                            android:orientation="horizontal">-->
+
+                    <!--                            <ImageView-->
+                    <!--                                android:id="@+id/imageViewpembicara"-->
+                    <!--                                android:layout_width="wrap_content"-->
+                    <!--                                android:layout_height="match_parent"-->
+                    <!--                                android:layout_marginRight="10dp"-->
+                    <!--                                app:srcCompat="@drawable/ic_mic_black_24dp" />-->
+
+                    <!--                            <TextView-->
+                    <!--                                android:id="@+id/pembicarajudul"-->
+                    <!--                                android:layout_width="match_parent"-->
+                    <!--                                android:layout_height="wrap_content"-->
+                    <!--                                android:fontFamily="@font/poppins_semibold"-->
+                    <!--                                android:text="Pembicara"-->
+                    <!--                                android:textAlignment="textStart"-->
+                    <!--                                android:textColor="@color/colorGrayDark"-->
+                    <!--                                android:textSize="18sp">-->
+                    <!--                            </TextView>-->
+
+                    <!--                        </LinearLayout>-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:id="@+id/pembicara1"-->
+                    <!--                            android:layout_width="match_parent"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:fontFamily="@font/poppins_light"-->
+                    <!--                            android:text="@string/pembicara1"-->
+                    <!--                            android:textAlignment="textStart"-->
+                    <!--                            android:textColor="@color/colorGrayDark"-->
+                    <!--                            android:textSize="14sp">-->
+                    <!--                        </TextView>-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:id="@+id/pembicara2"-->
+                    <!--                            android:layout_width="match_parent"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:fontFamily="@font/poppins_light"-->
+                    <!--                            android:text="@string/pembicara2"-->
+                    <!--                            android:textAlignment="textStart"-->
+                    <!--                            android:textColor="@color/colorGrayDark"-->
+                    <!--                            android:textSize="14sp">-->
+                    <!--                        </TextView>-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageViewtempat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_local_movies_blue_24dp" />
+
+                        <TextView
+                            android:id="@+id/tempatjudul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Genre"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="18sp">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/genre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/poppins_light"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorGrayDark"
+                        android:textSize="14sp">
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageViewtanggal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_person_blue_24dp" />
+
+                        <TextView
+                            android:id="@+id/tanggaljudul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Penulis"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="18sp">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/penulis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/poppins_light"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorGrayDark"
+                        android:textSize="14sp">
+                    </TextView>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageViewharga"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/hargajudul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Harga"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/colorGrayDark"
+                            android:textSize="18sp">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/harga"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/poppins_light"
+                        android:text=""
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorGrayDark"
+                        android:textSize="14sp">
+                    </TextView>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/belitiket"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="Add to Cart"
+                    android:background="@drawable/shapping_button2"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp">
+                </Button>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tambahwishlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="Add to Wishlist"
+                    android:background="@drawable/shapping_button2"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
