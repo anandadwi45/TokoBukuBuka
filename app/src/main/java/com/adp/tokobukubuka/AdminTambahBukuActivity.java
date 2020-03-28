@@ -54,7 +54,7 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
     ImageView ivCamera, imgView;
     private int GALLERY = 1, CAMERA = 2;
     Bitmap bitmap, decoded;
-    private String UPLOAD_URL = "https://tokobukubuka.000webhostapp.com/createbuku.php";
+    private String UPLOAD_URL = Server.URL+"createbuku.php";
     int success;
     private static final String TAG = AdminTambahBukuActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "success";

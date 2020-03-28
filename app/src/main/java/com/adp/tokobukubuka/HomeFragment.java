@@ -181,7 +181,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onBukuLongClick(View view, int position) {
-                Toast.makeText(getActivity(),"Kepencet Lama "+position,Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),"Kepencet Lama "+position,Toast.LENGTH_LONG).show();
             }
         }));
         return view;

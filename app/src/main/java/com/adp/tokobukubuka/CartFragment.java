@@ -177,7 +177,7 @@ public class CartFragment extends Fragment {
     }
 
     private void checkoutBuku(final String id_member) {
-        String url_simpan = "https://tokobukubuka.000webhostapp.com/checkout.php";
+        String url_simpan = Server.URL+"checkout.php";
 
         String tag_json = "tag_json";
 

@@ -99,7 +99,7 @@ public class DetailBukuActivity extends AppCompatActivity {
                 simpanData(id_member, id_buku);
             }
         });
-        DetailAPI = Server.URL + "/getdetailbuku.php?id_buku=" + id_buku;
+        DetailAPI = Server.URL + "getdetailbuku.php?id_buku=" + id_buku;
 
         img = (ImageView)findViewById(R.id.imageView);
         sin = (TextView)findViewById(R.id.sinopsis);
