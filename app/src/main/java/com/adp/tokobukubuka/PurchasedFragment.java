@@ -106,10 +106,11 @@ public class PurchasedFragment extends Fragment {
 
         sharedpreferences = getContext().getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
 
-        id_member = getActivity().getIntent().getStringExtra(TAG_ID);
+//        id_member = getActivity().getIntent().getStringExtra(TAG_ID);
         username = getActivity().getIntent().getStringExtra(TAG_USERNAME);
 
-        String url = Server.URL+"getdatabuku.php";
+        id_member = sharedpreferences.getString("id_member", "null");
+        String url = Server.URL+"getdatabuku.php?id_member="+id_member;
 
         buku = (RecyclerView) view.findViewById(R.id.rv_list_buku);
         buku.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
