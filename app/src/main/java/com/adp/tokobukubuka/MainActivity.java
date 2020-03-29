@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
         sharedpreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
         id_member = sharedpreferences.getString("id_member", "null");
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 // mengganti isi container dengan fragment baru
         ft.replace(R.id.FrameFragment, new HomeFragment());
         ft.commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.FrameFragment, new HomeFragment()).commit();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -108,6 +115,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void toggleVisibility2(Menu menu, @IdRes int id, boolean visible){
         menu.findItem(id).setVisible(visible);
     }
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            Fragment selectedFragment = null;
+
+            switch (menuItem.getItemId()){
+                case R.id.action_home:
+                    selectedFragment = new HomeFragment();
+                    break;
+                case R.id.action_book:
+//                    selectedFragment = new ScanFragment();
+                    break;
+                case R.id.action_list:
+                    selectedFragment = new PurchasedFragment();
+                    break;
+            }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.FrameFragment, selectedFragment).commit();
+
+            return true;
+        }
+    };
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
