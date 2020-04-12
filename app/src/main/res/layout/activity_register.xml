@@ -11,6 +11,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
@@ -34,16 +34,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/usernameLogo"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/username" />
 
                 <android.support.design.widget.TextInputLayout
@@ -57,21 +57,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Username"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/passwordLogo"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/password" />
 
                 <android.support.design.widget.TextInputLayout
@@ -85,21 +86,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/usernameConfirm"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/password" />
 
                 <android.support.design.widget.TextInputLayout
@@ -113,21 +115,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Confirm Password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imgNama"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
                 <android.support.design.widget.TextInputLayout
@@ -141,21 +144,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nama"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imgEmail"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/ic_email_black_24dp" />
 
                 <android.support.design.widget.TextInputLayout
@@ -169,21 +173,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imgAlamat"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/ic_add_location_black_24dp" />
 
                 <android.support.design.widget.TextInputLayout
@@ -197,21 +202,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Alamat"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"
+                        android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imgTelp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/ic_phone_black_24dp" />
 
                 <android.support.design.widget.TextInputLayout
@@ -225,9 +231,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Telepon"
-                        android:inputType="phone" />
+                        android:inputType="phone"
+                        android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shapping_button"
+                android:fontFamily="@font/poppins"
+                android:text="SIGN UP"
+                android:textColor="@color/colorWhite" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -253,17 +272,6 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Sign In" />
             </LinearLayout>
-            <Button
-                android:id="@+id/buttonSignUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="50dp"
-                android:background="@drawable/shapping_button"
-                android:fontFamily="@font/poppins"
-                android:text="SIGN UP"
-                android:textColor="@color/colorWhite" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
