@@ -24,7 +24,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="#ffffff"
-            android:hint="search"
+            android:hint="@android:string/search_go"
             android:inputType="text"
             android:padding="7dp"
             android:singleLine="true"
