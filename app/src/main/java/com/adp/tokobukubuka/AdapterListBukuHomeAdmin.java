@@ -24,7 +24,7 @@ public class AdapterListBukuHomeAdmin extends BaseAdapter {
         this.activity = act;
     }
     public int getCount() {
-        return AdminHomeFragment.id_buku.size();
+        return AdminListBukuFragment.id_buku.size();
     }
     public Object getItem(int position) {
         return position;
@@ -52,11 +52,11 @@ public class AdapterListBukuHomeAdmin extends BaseAdapter {
         holder.txtharga = (TextView) convertView.findViewById(R.id.txtHarga);
         holder.txtgenre = (TextView) convertView.findViewById(R.id.txtGenre);
         holder.imgThumb = (ImageView) convertView.findViewById(R.id.imgThumb);
-        holder.txtnama.setText(AdminHomeFragment.nama_buku.get(position));
+        holder.txtnama.setText(AdminListBukuFragment.nama_buku.get(position));
 //        holder.txtpenulis.setText(AdminHomeFragment.p.get(position));
-        holder.txtharga.setText(AdminHomeFragment.price.get(position));
-        holder.txtgenre.setText(AdminHomeFragment.genre.get(position));
-        Picasso.with(activity).load(Server.URL+"/"+AdminHomeFragment.gambar.get(position)).placeholder(R.drawable.logo).into(holder.imgThumb);
+        holder.txtharga.setText(AdminListBukuFragment.price.get(position));
+        holder.txtgenre.setText(AdminListBukuFragment.genre.get(position));
+        Picasso.with(activity).load(Server.URL+"/"+AdminListBukuFragment.gambar.get(position)).placeholder(R.drawable.logo).into(holder.imgThumb);
         return convertView;
     }
 }

@@ -95,10 +95,10 @@ public class AdminBukuActivity extends AppCompatActivity implements NavigationVi
 //            Intent intent = new Intent(AdminBukuActivity.this, ProfileMemberActivity.class);
 //            startActivity(intent);
         } else if (id == R.id.nav_list) {
-//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//// mengganti isi container dengan fragment baru
-//            ft.replace(R.id.FrameFragment, new CartFragment());
-//            ft.commit();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+// mengganti isi container dengan fragment baru
+            ft.replace(R.id.FrameFragment, new AdminListBukuFragment());
+            ft.commit();
         } else if (id == R.id.nav_logout) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(LoginAdminActivity.session_status, false);
