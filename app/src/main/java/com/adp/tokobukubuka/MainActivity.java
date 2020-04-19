@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     selectedFragment = new HomeFragment();
                     break;
                 case R.id.action_book:
-//                    selectedFragment = new ScanFragment();
+                    selectedFragment = new ListBukuFragment();
                     break;
                 case R.id.action_list:
                     selectedFragment = new PurchasedFragment();

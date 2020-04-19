@@ -10,13 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewerActivity">
-
-        </activity>
+        <activity android:name=".UploadBuktiActivity"></activity>
+        <activity android:name=".ViewerActivity"></activity>
         <activity android:name=".LoginAdminActivity" />
         <activity android:name=".AdminTambahBukuActivity" />
         <activity android:name=".AdminDetailBukuActivity" />
-        <activity android:name=".AdminBukuActivity"></activity>
+        <activity android:name=".AdminBukuActivity" />
         <activity android:name=".AddCartActivity" />
         <activity android:name=".DetailBukuActivity" />
         <activity android:name=".ProfileMemberActivity" />
@@ -30,13 +29,12 @@
             </intent-filter>
         </activity>
 
-
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
