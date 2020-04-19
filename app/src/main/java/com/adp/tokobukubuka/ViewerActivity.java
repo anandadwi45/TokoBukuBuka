@@ -23,7 +23,7 @@ public class ViewerActivity extends AppCompatActivity {
 
         pdfView = (PDFView) findViewById(R.id.pdfView);
 
-        new RetrievePDFStream().execute("https://media.neliti.com/media/publications/233736-studi-implementasi-sistem-big-data-untuk-857db2bd.pdf");
+        new RetrievePDFStream().execute("https://tokobukubuka.000webhostapp.com/Book/%5BRBE%5D%20Charil%20Anwar%20-%20Aku%20Ini%20Binatang%20Jalang.pdf");
 
     }
 
