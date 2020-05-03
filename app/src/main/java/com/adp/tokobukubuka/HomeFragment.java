@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
         id_member = getActivity().getIntent().getStringExtra(TAG_ID);
         username = getActivity().getIntent().getStringExtra(TAG_USERNAME);
 
-        String url = Server.URL+"getdatabuku.php";
+        String url = Server.URL+"getdatatopbuku.php";
 
         top = (RecyclerView) view.findViewById(R.id.rv_list_top_buku);
         top.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
