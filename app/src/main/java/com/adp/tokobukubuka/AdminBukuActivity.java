@@ -83,6 +83,7 @@ public class AdminBukuActivity extends AppCompatActivity implements NavigationVi
 
     }
 
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -91,12 +92,12 @@ public class AdminBukuActivity extends AppCompatActivity implements NavigationVi
         if (id == R.id.nav_home) {
             Intent intent = new Intent(AdminBukuActivity.this, AdminBukuActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_profile) {
-//            Intent intent = new Intent(AdminBukuActivity.this, ProfileMemberActivity.class);
-//            startActivity(intent);
+        } else if (id == R.id.nav_history) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.FrameFragment, new AdminHistoryFragment());
+            ft.commit();
         } else if (id == R.id.nav_list) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-// mengganti isi container dengan fragment baru
             ft.replace(R.id.FrameFragment, new AdminListBukuFragment());
             ft.commit();
         } else if (id == R.id.nav_logout) {
