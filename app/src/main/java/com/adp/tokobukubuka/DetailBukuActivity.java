@@ -99,6 +99,15 @@ public class DetailBukuActivity extends AppCompatActivity {
                 simpanData(id_member, id_buku);
             }
         });
+
+        Button btnAddWishlist = (Button) findViewById(R.id.tambahwishlist);
+        btnAddWishlist.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                simpanWishlist(id_member, id_buku);
+            }
+        });
+
         DetailAPI = Server.URL + "getdetailbuku.php?id_buku=" + id_buku;
 
         img = (ImageView)findViewById(R.id.imageView);
@@ -139,6 +148,57 @@ public class DetailBukuActivity extends AppCompatActivity {
                     if (hasil.equalsIgnoreCase("true")) {
                         Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(DetailBukuActivity.this, AddCartActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(DetailBukuActivity.this, "Error JSON", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("ERROR", error.getMessage());
+                Toast.makeText(DetailBukuActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                hideDialog();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<String, String>();
+                param.put("id_member", id_member);
+                param.put("id_buku", id_buku);
+                return param;
+            }
+        };
+
+        AppController.getAppController().addToRequestQueue(stringRequest, tag_json);
+    }
+
+    private void simpanWishlist(final String id_member, final String id_buku) {
+        String url_wishlist = Server.URL+"addwishlist.php";
+
+        String tag_json = "tag_json";
+
+//        pd.setCancelable(false);
+//        pd.setMessage("Menyimpan...");
+//        showDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_wishlist, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String respon) {
+                Log.d("respon", respon.toString());
+//                hideDialog();
+
+                try {
+                    JSONObject jObject = new JSONObject(respon);
+                    String pesan = jObject.getString("pesan");
+                    String hasil = jObject.getString("result");
+                    if (hasil.equalsIgnoreCase("true")) {
+                        Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(DetailBukuActivity.this, AddCartActivity.class));
                         finish();
                     } else {
                         Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
