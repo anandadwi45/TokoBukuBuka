@@ -1,14 +1,18 @@
 package com.adp.tokobukubuka;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -146,6 +150,71 @@ public class AdminHistoryFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
+        trx.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), trx, new ClickListener() {
+            @Override
+            public void onTrxClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), ConfirmActivity.class);
+                intent.putExtra("id_transaksi", list_transaksi.get(position).get("id_transaksi"));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onTrxLongClick(View view, int position) {
+//                Toast.makeText(getActivity(),"Kepencet Lama "+position,Toast.LENGTH_LONG).show();
+            }
+        }));
+
         return view;
+    }
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+        private GestureDetector mGestureDetector;
+        private ClickListener mClickListener;
+
+
+        public RecyclerTouchListener(final Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
+            this.mClickListener = clickListener;
+            mGestureDetector = new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(),e.getY());
+                    if (child!=null && clickListener!=null){
+                        clickListener.onTrxLongClick(child,recyclerView.getChildAdapterPosition(child));
+                    }
+                    super.onLongPress(e);
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child!=null && mClickListener!=null && mGestureDetector.onTouchEvent(e)){
+                mClickListener.onTrxClick(child,rv.getChildAdapterPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+    public static interface ClickListener{
+        public void onTrxClick(View view, int position);
+        public void onTrxLongClick(View view, int position);
     }
 }
