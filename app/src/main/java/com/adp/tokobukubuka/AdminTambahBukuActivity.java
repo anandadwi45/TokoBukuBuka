@@ -2,12 +2,15 @@ package com.adp.tokobukubuka;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +42,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +59,7 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
     Bitmap bitmap, decoded;
     private String UPLOAD_URL = Server.URL+"createbuku.php";
+    private static final int SELECT_IMAGE = 100;
     int success;
     private static final String TAG = AdminTambahBukuActivity.class.getSimpleName();
     private static final String TAG_SUCCESS = "success";
@@ -67,12 +72,20 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
     private String KEY_GAMBAR = "gambar";
     private String KEY_IDPEN = "id_penulis";
     private String nama_buku, genre, sinopsis, stock, price, gambar;
+    private Uri imageUri;
     String tag_json_obj = "json_obj_req";
+
+    private String ImageName;
 
     public static final String url = Server.URL+"penulis.php";
 
     public static final String TAG_IDPEN = "id_penulis";
     public static final String TAG_PENULIS = "nama_penulis";
+
+    public static final String sharedPreferences = "SharedPreferences";
+    public static final String Image = "image";
+
+    SharedPreferences sharedpreferences;
 
     TextView txt_hasil;
     ProgressDialog pDialog;
@@ -83,6 +96,8 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_tambah_buku);
+
+        sharedpreferences = getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE);
 
         mDb = AppDatabase.getDatabase(getApplicationContext());
         judul = findViewById(R.id.txt_judul);
@@ -123,12 +138,13 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
                 jud = judul.getText().toString();
                 sin = sinop.getText().toString();
                 gen = genr.getText().toString();
-                sto = stok.getText().toString();
+//                sto = stok.getText().toString();
                 hrg = harga.getText().toString();
                 pen = penulis.getText().toString();
 
                 final DataBuku data = new DataBuku(
-                        jud, gen, sin, Integer.parseInt(sto), Integer.parseInt(hrg), Integer.parseInt(pen)
+//                        jud, gen, sin, Integer.parseInt(sto), Integer.parseInt(hrg), Integer.parseInt(pen)
+                        jud, gen, sin, Integer.parseInt(hrg), Integer.parseInt(pen)
                 );
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
@@ -148,7 +164,7 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
         ivCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPictureDialog();
+                SelectImageFromGallery();
             }
         });
 
@@ -215,101 +231,128 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
             pDialog.dismiss();
     }
 
+    private void SelectImageFromGallery()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+    }
 
-    private void showPictureDialog(){
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-        pictureDialog.setTitle("Select Image");
-        String[] pictureDialogItems = {
-                "From gallery",
-                "From camera" };
-        pictureDialog.setItems(pictureDialogItems,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                choosePhotoFromGallery();
-                                break;
-                            case 1:
-                                takePhotoFromCamera();
-                                break;
-                        }
-                    }
-                });
-        pictureDialog.show();
-    }
-    public void choosePhotoFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY);
-    }
-    private void takePhotoFromCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA);
-    }
-    public String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-    }
-    private void setToImageView(Bitmap bmp) {
-        //compress image
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
-        imgView.setImageBitmap(decoded);
-    }
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        float bitmapRatio = (float) width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        return Bitmap.createScaledBitmap(image, width, height, false);
-    }
+//    private void showPictureDialog(){
+//        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+//        pictureDialog.setTitle("Select Image");
+//        String[] pictureDialogItems = {
+//                "From gallery",
+//                "From camera" };
+//        pictureDialog.setItems(pictureDialogItems,
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which) {
+//                            case 0:
+//                                choosePhotoFromGallery();
+//                                break;
+//                            case 1:
+//                                takePhotoFromCamera();
+//                                break;
+//                        }
+//                    }
+//                });
+//        pictureDialog.show();
+//    }
+//    public void choosePhotoFromGallery() {
+//        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        galleryIntent.setType("image/*");
+//        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+////        startActivityForResult(galleryIntent, GALLERY);
+//        startActivityForResult(Intent.createChooser(galleryIntent, GALLERY), SELECT_IMAGE);
+//    }
+//    private void takePhotoFromCamera() {
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(intent, CAMERA);
+//    }
+//    public String getStringImage(Bitmap bmp) {
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//        byte[] imageBytes = baos.toByteArray();
+//        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+//        return encodedImage;
+//    }
+//    private void setToImageView(Bitmap bmp) {
+//        //compress image
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
+//        imgView.setImageBitmap(decoded);
+//    }
+//    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+//        int width = image.getWidth();
+//        int height = image.getHeight();
+//        float bitmapRatio = (float) width / (float) height;
+//        if (bitmapRatio > 1) {
+//            width = maxSize;
+//            height = (int) (width / bitmapRatio);
+//        } else {
+//            height = maxSize;
+//            width = (int) (height * bitmapRatio);
+//        }
+//        return Bitmap.createScaledBitmap(image, width, height, false);
+//    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//
+//        if (requestCode == GALLERY && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            Uri filePath = data.getData();
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+//                setToImageView(getResizedBitmap(bitmap, 512));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if(requestCode == CAMERA && resultCode == RESULT_OK){
+//            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+//            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//            File destination = new File(Environment.getExternalStorageDirectory(),
+//                    System.currentTimeMillis() + ".jpg");
+//            FileOutputStream fo;
+//            try {
+//                destination.createNewFile();
+//                fo = new FileOutputStream(destination);
+//                fo.write(bytes.toByteArray());
+//                fo.close();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
+//            imgView.setImageBitmap(decoded);
+//            //Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+//            //setToImageView(getResizedBitmap(bitmap,1080));
+//            // imgView.setImageURI(image_uri);
+//        }
+//    }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                setToImageView(getResizedBitmap(bitmap, 512));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if(requestCode == CAMERA && resultCode == RESULT_OK){
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            File destination = new File(Environment.getExternalStorageDirectory(),
-                    System.currentTimeMillis() + ".jpg");
-            FileOutputStream fo;
-            try {
-                destination.createNewFile();
-                fo = new FileOutputStream(destination);
-                fo.write(bytes.toByteArray());
-                fo.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(bytes.toByteArray()));
-            imgView.setImageBitmap(decoded);
-            //Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-            //setToImageView(getResizedBitmap(bitmap,1080));
-            // imgView.setImageURI(image_uri);
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        switch (requestCode) {
+            case SELECT_IMAGE:
+                if (resultCode == RESULT_OK) {
+                    this.imageUri = imageReturnedIntent.getData();
+                    this.imgView.setImageURI(this.imageUri);
+                    this.submit.setEnabled(true);
+                }
         }
     }
+
     private void uploadCRUD() {
         //menampilkan progress dialog
         final ProgressDialog loading = ProgressDialog.show(this, "Uploading...", "Please wait...", false, false);
@@ -319,14 +362,64 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.e(TAG, "Response: " + response.toString());
                         try {
-                            JSONObject jObj = new JSONObject(response);
+                            final JSONObject jObj = new JSONObject(response);
                             success = jObj.getInt(TAG_SUCCESS);
+
                             if (success == 1) {
-                                Log.e("v Add", jObj.toString());
-                                Toast.makeText(AdminTambahBukuActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
-                                finish();
-                                Intent intent = new Intent(AdminTambahBukuActivity.this, AdminBukuActivity.class);
-                                startActivity(intent);
+//                                UploadImage();
+                                try {
+                                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                                    final int imageLength = imageStream.available();
+
+                                    final Handler handler = new Handler();
+
+                                    Thread th = new Thread(new Runnable() {
+                                        public void run() {
+
+                                            try {
+
+                                                final String imageName = ImageManager.UploadImage(imageStream, imageLength);
+
+                                                handler.post(new Runnable() {
+
+                                                    public void run() {
+                                                        Log.e("v Add", jObj.toString());
+//                                                        Toast.makeText(AdminTambahBukuActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+//                                                        String imageupload = sharedpreferences.getString("image", "");
+                                                        Toast.makeText(AdminTambahBukuActivity.this, imageName, Toast.LENGTH_LONG).show();
+                                                        finish();
+                                                        Intent intent = new Intent(AdminTambahBukuActivity.this, AdminBukuActivity.class);
+                                                        startActivity(intent);
+                                                        Toast.makeText(AdminTambahBukuActivity.this, "Image Uploaded Successfully. Name = " + imageName, Toast.LENGTH_SHORT).show();
+
+                                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                        editor.putString(Image, imageName);
+                                                        editor.apply();
+                                                    }
+                                                });
+                                            }
+                                            catch(Exception ex) {
+                                                final String exceptionMessage = ex.getMessage();
+                                                handler.post(new Runnable() {
+                                                    public void run() {
+                                                        Toast.makeText(AdminTambahBukuActivity.this, exceptionMessage, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        }});
+                                    th.start();
+                                }
+                                catch(Exception ex) {
+
+                                    Toast.makeText(AdminTambahBukuActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+//                                Log.e("v Add", jObj.toString());
+////                                Toast.makeText(AdminTambahBukuActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+////                                String imageupload = sharedpreferences.getString("image", "");
+//                                Toast.makeText(AdminTambahBukuActivity.this, imageName, Toast.LENGTH_LONG).show();
+//                                finish();
+//                                Intent intent = new Intent(AdminTambahBukuActivity.this, AdminBukuActivity.class);
+//                                startActivity(intent);
                             } else {
                                 Toast.makeText(AdminTambahBukuActivity.this, jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
                             }
@@ -349,6 +442,7 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() {
+                String imageupload = sharedpreferences.getString("image", "");
                 //membuat parameters
                 Map<String, String> params = new HashMap<String, String>();
                 //menambah parameter yang di kirim ke web servis
@@ -356,10 +450,11 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
 //                params.put(penulis, penulis.getText().toString().trim());
                 params.put(KEY_SINOPSIS, sinop.getText().toString().trim());
                 params.put(KEY_GENRE, genr.getText().toString().trim());
-                params.put(KEY_STOK, stok.getText().toString().trim());
+//                params.put(KEY_STOK, stok.getText().toString().trim());
                 params.put(KEY_PRICE, harga.getText().toString().trim());
                 params.put(KEY_IDPEN, penulis.getText().toString().trim());
-                params.put(KEY_GAMBAR, getStringImage(decoded));
+                params.put(KEY_GAMBAR, imageupload);
+//                params.put(KEY_GAMBAR, imageUri.getText().toString().trim());
                 //kembali ke parameters
                 Log.e(TAG, "" + params);
                 return params;
@@ -372,4 +467,47 @@ public class AdminTambahBukuActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+//    private void UploadImage()
+//    {
+//        try {
+//            final InputStream imageStream = getContentResolver().openInputStream(this.imageUri);
+//            final int imageLength = imageStream.available();
+//
+//            final Handler handler = new Handler();
+//
+//            Thread th = new Thread(new Runnable() {
+//                public void run() {
+//
+//                    try {
+//
+//                        final String imageName = ImageManager.UploadImage(imageStream, imageLength);
+//
+//                        handler.post(new Runnable() {
+//
+//                            public void run() {
+//                                Toast.makeText(AdminTambahBukuActivity.this, "Image Uploaded Successfully. Name = " + imageName, Toast.LENGTH_SHORT).show();
+//
+//                                SharedPreferences.Editor editor = sharedpreferences.edit();
+//                                editor.putString(Image, imageName);
+//                                editor.apply();
+//                            }
+//                        });
+//                    }
+//                    catch(Exception ex) {
+//                        final String exceptionMessage = ex.getMessage();
+//                        handler.post(new Runnable() {
+//                            public void run() {
+//                                Toast.makeText(AdminTambahBukuActivity.this, exceptionMessage, Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
+//                }});
+//            th.start();
+//        }
+//        catch(Exception ex) {
+//
+//            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }

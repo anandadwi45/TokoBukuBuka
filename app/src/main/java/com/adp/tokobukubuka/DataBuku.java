@@ -20,8 +20,8 @@ public class DataBuku {
     @ColumnInfo(name = "sinopsis")
     private String sinopsis;
 
-    @ColumnInfo(name = "stock")
-    private int stock;
+//    @ColumnInfo(name = "stock")
+//    private int stock;
 
     @ColumnInfo(name = "price")
     private int price;
@@ -32,26 +32,29 @@ public class DataBuku {
     @ColumnInfo(name = "id_penulis")
     private int id_penulis;
 
-    public DataBuku(int id_buku, String nama_buku, String genre, String sinopsis, int stock, int price, String gambar, int id_penulis) {
+    public DataBuku(int id_buku, String nama_buku, String genre, String sinopsis, int price, String gambar, int id_penulis) {
         this.id_buku = id_buku;
         this.nama_buku = nama_buku;
         this.genre = genre;
         this.sinopsis = sinopsis;
-        this.stock = stock;
+//        this.stock = stock;
         this.price = price;
         this.gambar= gambar;
         this.id_penulis= id_penulis;
     }
 
-    @Ignore
-    public DataBuku(String nama_buku, String genre, String sinopsis, int stock, int price, int id_penulis) {
-        this.nama_buku = nama_buku;
-        this.genre = genre;
-        this.sinopsis = sinopsis;
-        this.stock = stock;
-        this.price = price;
-        this.gambar= gambar;
-        this.id_penulis= id_penulis;
+//    @Ignore
+//    public DataBuku(String nama_buku, String genre, String sinopsis, int price, int id_penulis) {
+//        this.nama_buku = nama_buku;
+//        this.genre = genre;
+//        this.sinopsis = sinopsis;
+////        this.stock = stock;
+//        this.price = price;
+//        this.gambar= gambar;
+//        this.id_penulis= id_penulis;
+//    }
+
+    public DataBuku(String jud, String gen, String sin, int parseInt, int parseInt1) {
     }
 
     public int getId_buku() {
@@ -86,13 +89,13 @@ public class DataBuku {
         this.sinopsis = sinopsis;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+//    public int getStock() {
+//        return stock;
+//    }
+//
+//    public void setStock(int stock) {
+//        this.stock = stock;
+//    }
 
     public int getPrice() {
         return price;

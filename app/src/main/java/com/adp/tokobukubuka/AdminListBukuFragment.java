@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -67,6 +68,7 @@ public class AdminListBukuFragment extends Fragment {
     ConnectivityManager conMgr;
     SharedPreferences sharedpreferences;
     AppDatabase mDb;
+    Button btnAdd;
 
     public static ArrayList<String> id_buku = new ArrayList<String>();
     public static ArrayList<String> nama_buku = new ArrayList<String>();
@@ -124,6 +126,7 @@ public class AdminListBukuFragment extends Fragment {
         edtKeyword = view.findViewById(R.id.edtKeyword);
         btnSearch = view.findViewById(R.id.btnSearch);
         txtAlert = view.findViewById(R.id.txtAlert);
+        btnAdd = view.findViewById(R.id.addBook);
         cla = new AdapterListBukuHomeAdmin(this.getActivity());
         mAdapter = new DatabukuAdapter(this.getActivity());
         ListAPI = Server.URL+"getlistbukuadmin.php";
@@ -138,6 +141,14 @@ public class AdminListBukuFragment extends Fragment {
                 Intent iDetail = new Intent(getActivity(), AdminDetailBukuActivity.class);
                 iDetail.putExtra("id_buku", id_buku.get(position));
                 startActivity(iDetail);
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addBook = new Intent(getActivity(), AdminTambahBukuActivity.class);
+                startActivity(addBook);
             }
         });
 
