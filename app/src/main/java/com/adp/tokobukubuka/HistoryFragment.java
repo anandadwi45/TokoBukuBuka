@@ -34,10 +34,10 @@ import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AdminHistoryFragment#newInstance} factory method to
+ * Use the {@link HistoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdminHistoryFragment extends Fragment {
+public class HistoryFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,7 +49,7 @@ public class AdminHistoryFragment extends Fragment {
 
     SharedPreferences sharedpreferences;
 
-    private RecyclerView trx;
+    private RecyclerView trxm;
 
 
     private RequestQueue requestQueue;
@@ -61,9 +61,9 @@ public class AdminHistoryFragment extends Fragment {
     public static final String TAG_ID = "id_member";
     public static final String TAG_USERNAME = "username";
 
-    ArrayList<HashMap<String, String>> list_transaksi;
+    ArrayList<HashMap<String, String>> list_trxmember;
 
-    public AdminHistoryFragment() {
+    public HistoryFragment() {
         // Required empty public constructor
     }
 
@@ -73,11 +73,11 @@ public class AdminHistoryFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminHistoryFragment.
+     * @return A new instance of fragment HistoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdminHistoryFragment newInstance(String param1, String param2) {
-        AdminHistoryFragment fragment = new AdminHistoryFragment();
+    public static HistoryFragment newInstance(String param1, String param2) {
+        HistoryFragment fragment = new HistoryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -98,23 +98,23 @@ public class AdminHistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_admin_history, null);
+        View view = inflater.inflate(R.layout.fragment_history, null);
 
-//        sharedpreferences = getContext().getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
-//
-//        id_member = sharedpreferences.getString("id_member", "null");
-//        username = getActivity().getIntent().getStringExtra(TAG_USERNAME);
+        sharedpreferences = getContext().getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
 
-        String url = Server.URL+"getdatahistory.php";
+        id_member = sharedpreferences.getString("id_member", "null");
+        username = getActivity().getIntent().getStringExtra(TAG_USERNAME);
 
-        trx = (RecyclerView) view.findViewById(R.id.rvHistory);
-        trx.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        String url = Server.URL+"getdatahistorymember.php?id_member="+id_member;
+
+        trxm = (RecyclerView) view.findViewById(R.id.rvHistoryMember);
+        trxm.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         CardView cdTop = (CardView) view.findViewById(R.id.cdTop);
 
         requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-        list_transaksi = new ArrayList<>();
+        list_trxmember = new ArrayList<>();
 
 
         stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -123,7 +123,7 @@ public class AdminHistoryFragment extends Fragment {
                 Log.d("response ", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("trx");
+                    JSONArray jsonArray = jsonObject.getJSONArray("trxm");
                     for (int a = 0; a < jsonArray.length(); a++) {
                         JSONObject json = jsonArray.getJSONObject(a);
                         HashMap<String, String> map = new HashMap<>();
@@ -132,9 +132,9 @@ public class AdminHistoryFragment extends Fragment {
                         map.put("total_harga", json.getString("total_harga"));
                         map.put("tanggal", json.getString("tanggal"));
                         map.put("status", json.getString("status"));
-                        list_transaksi.add(map);
-                        AdapterListTransaksi adapter = new AdapterListTransaksi(AdminHistoryFragment.this, list_transaksi);
-                        trx.setAdapter(adapter);
+                        list_trxmember.add(map);
+                        AdapterListTransaksiMember adapter = new AdapterListTransaksiMember(HistoryFragment.this, list_trxmember);
+                        trxm.setAdapter(adapter);
 
                     }
                 } catch (JSONException e) {
@@ -150,11 +150,11 @@ public class AdminHistoryFragment extends Fragment {
 
         requestQueue.add(stringRequest);
 
-        trx.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), trx, new ClickListener() {
+        trxm.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), trxm, new ClickListener() {
             @Override
             public void onTrxClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), ConfirmActivity.class);
-                intent.putExtra("id_transaksi", list_transaksi.get(position).get("id_transaksi"));
+                Intent intent = new Intent(getActivity(), UploadBuktiActivity.class);
+                intent.putExtra("id_transaksi", list_trxmember.get(position).get("id_transaksi"));
                 startActivity(intent);
             }
 
@@ -166,6 +166,7 @@ public class AdminHistoryFragment extends Fragment {
 
         return view;
     }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggleVisibility(navigationView.getMenu(), R.id.nav_logout, visible);
         toggleVisibility(navigationView.getMenu(), R.id.nav_list, visible);
         toggleVisibility(navigationView.getMenu(), R.id.nav_wishlist, visible);
+        toggleVisibility(navigationView.getMenu(), R.id.nav_historym, visible);
     }
     public void setItemVisible2(boolean visible){
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -164,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 // mengganti isi container dengan fragment baru
             ft.replace(R.id.FrameFragment, new WishlistFragment());
+            ft.commit();
+        } else if (id == R.id.nav_historym) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+// mengganti isi container dengan fragment baru
+            ft.replace(R.id.FrameFragment, new HistoryFragment());
             ft.commit();
         } else if (id == R.id.nav_login) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);

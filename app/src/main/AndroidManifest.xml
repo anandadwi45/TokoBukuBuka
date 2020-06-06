@@ -10,10 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UploadBuktiActivity">
-
-        </activity>
-        <activity android:name=".ViewerActivity"></activity>
+        <activity android:name=".ConfirmActivity"></activity>
+        <activity android:name=".UploadBuktiActivity"></activity>
+        <activity android:name=".ViewerActivity" />
         <activity android:name=".LoginAdminActivity" />
         <activity android:name=".AdminTambahBukuActivity" />
         <activity android:name=".AdminDetailBukuActivity" />
@@ -35,8 +34,8 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

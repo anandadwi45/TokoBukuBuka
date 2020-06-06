@@ -1,6 +1,5 @@
 package com.adp.tokobukubuka;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -48,7 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DetailBukuActivity extends AppCompatActivity {
+public class ConfirmActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
 
@@ -57,13 +56,13 @@ public class DetailBukuActivity extends AppCompatActivity {
     public static final String TAG_ID = "id_member";
     public static final String TAG_USERNAME = "username";
     private ImageView img;
-    private TextView nm, kuot, desc, tmpt, tgl, hrg, sin, jud, pen, sto, ter, gen;
-    String nama_buku, nama_penulis, stock, price, genre, sinopsis, tempat, gambar, terjual;
+    private TextView pem, tot;
+    String gambar,pembeli,total;
     String id_member, username;
-    String url_detail;
+    String url_confirm;
     String DetailAPI;
     int IOConnect = 0;
-    private String id_buku;
+    private String id_transaksi;
 
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
@@ -73,58 +72,37 @@ public class DetailBukuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_buku);
-
-        sharedPreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
-
-        id_member = sharedPreferences.getString("id_member", "null");
-
-        username = getIntent().getStringExtra(TAG_USERNAME);
+        setContentView(R.layout.activity_confirm);
 
         Intent iGet = getIntent();
-        id_buku = iGet.getStringExtra("id_buku");
+        id_transaksi = iGet.getStringExtra("id_transaksi");
 
-
-        Button btnBeliTiket = (Button) findViewById(R.id.belitiket);
-        btnBeliTiket.setOnClickListener(new View.OnClickListener(){
+        Button btnConfirm = (Button) findViewById(R.id.btnConfirm);
+        btnConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                simpanData(id_member, id_buku);
+                confirmTransaksi(id_transaksi);
             }
         });
 
-        Button btnAddWishlist = (Button) findViewById(R.id.tambahwishlist);
-        btnAddWishlist.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                simpanWishlist(id_member, id_buku);
-            }
-        });
-
-        DetailAPI = Server.URL + "getdetailbuku.php?id_buku=" + id_buku;
+        DetailAPI = Server.URL + "getdetailtransaksi.php?id_transaksi=" + id_transaksi;
 
         img = (ImageView)findViewById(R.id.imageView);
-        sin = (TextView)findViewById(R.id.sinopsis);
-        jud = (TextView)findViewById(R.id.judul);
-        pen = (TextView) findViewById(R.id.penulis);
-        hrg = (TextView) findViewById(R.id.harga);
-        sto = (TextView) findViewById(R.id.stok);
-        gen = (TextView) findViewById(R.id.genre);
-        ter = (TextView) findViewById(R.id.terjual);
+        pem = (TextView) findViewById(R.id.pembeliConfirm);
+        tot = (TextView) findViewById(R.id.totalConfirm);
 
-        requestQueue = Volley.newRequestQueue(DetailBukuActivity.this);
+        requestQueue = Volley.newRequestQueue(ConfirmActivity.this);
 
 
         new getDataTask().execute();
-
     }
 
-    private void simpanData(final String id_member, final String id_buku) {
-        String url_simpan = Server.URL+"addcart.php";
+    private void confirmTransaksi(final String id_transaksi) {
+        String url_confirm = Server.URL+"confirmtransaksi.php";
 
         String tag_json = "tag_json";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_simpan, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_confirm, new Response.Listener<String>() {
             @Override
             public void onResponse(String respon) {
                 Log.d("respon", respon.toString());
@@ -135,81 +113,29 @@ public class DetailBukuActivity extends AppCompatActivity {
                     String pesan = jObject.getString("pesan");
                     String hasil = jObject.getString("result");
                     if (hasil.equalsIgnoreCase("true")) {
-                        Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DetailBukuActivity.this, AddCartActivity.class));
+                        Toast.makeText(ConfirmActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ConfirmActivity.this, AdminBukuActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ConfirmActivity.this, pesan, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(DetailBukuActivity.this, "Error JSON", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfirmActivity.this, "Error JSON", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("ERROR", error.getMessage());
-                Toast.makeText(DetailBukuActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ConfirmActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 //                hideDialog();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<String, String>();
-                param.put("id_member", id_member);
-                param.put("id_buku", id_buku);
-                return param;
-            }
-        };
-
-        AppController.getAppController().addToRequestQueue(stringRequest, tag_json);
-    }
-
-    private void simpanWishlist(final String id_member, final String id_buku) {
-        String url_wishlist = Server.URL+"addwishlist.php";
-
-        String tag_json = "tag_json";
-
-//        pd.setCancelable(false);
-//        pd.setMessage("Menyimpan...");
-//        showDialog();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_wishlist, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String respon) {
-                Log.d("respon", respon.toString());
-//                hideDialog();
-
-                try {
-                    JSONObject jObject = new JSONObject(respon);
-                    String pesan = jObject.getString("pesan");
-                    String hasil = jObject.getString("result");
-                    if (hasil.equalsIgnoreCase("true")) {
-                        Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(DetailBukuActivity.this, AddCartActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(DetailBukuActivity.this, pesan, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(DetailBukuActivity.this, "Error JSON", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("ERROR", error.getMessage());
-                Toast.makeText(DetailBukuActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                hideDialog();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> param = new HashMap<String, String>();
-                param.put("id_member", id_member);
-                param.put("id_buku", id_buku);
+                param.put("id_transaksi", id_transaksi);
                 return param;
             }
         };
@@ -249,12 +175,8 @@ public class DetailBukuActivity extends AppCompatActivity {
                     public void onError() {
                     }
                 });
-                sin.setText(sinopsis);
-                jud.setText(nama_buku);
-                pen.setText(nama_penulis);
-                sto.setText(stock);
-                ter.setText(price);
-                gen.setText(genre);
+                pem.setText(pembeli);
+                tot.setText(total);
 
 
             }
@@ -280,14 +202,9 @@ public class DetailBukuActivity extends AppCompatActivity {
             for (int i = 0; i < data.length(); i++) {
                 JSONObject object = data.getJSONObject(i);
                 JSONObject detail = object.getJSONObject("detail");
-                gambar = detail.getString("gambar");
-                nama_buku = detail.getString("nama_buku");
-                genre = detail.getString("genre");
-                sinopsis = detail.getString("sinopsis");
-                stock = detail.getString("stock");
-                price = detail.getString("price");
-                nama_penulis = detail.getString("nama_penulis");
-                terjual = detail.getString("price");
+                gambar = detail.getString("bukti_transaksi");
+                pembeli = detail.getString("fullname");
+                total = detail.getString("total_harga");
             }
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
