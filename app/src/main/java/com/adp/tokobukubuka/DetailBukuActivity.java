@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
@@ -40,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -234,21 +237,61 @@ public class DetailBukuActivity extends AppCompatActivity {
             // if internet connection and data available show data
             // otherwise, show alert text
             if (IOConnect == 0) {
-                Picasso.with(getApplicationContext()).load(Server.URL + gambar).placeholder(R.drawable.logo).into(img, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Bitmap bitmap = ((BitmapDrawable) img.getDrawable()).getBitmap();
-                        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                            @Override
-                            public void onGenerated(Palette palette) {
-                            }
-                        });
-                    }
+//                Picasso.with(getApplicationContext()).load(Server.URL + gambar).placeholder(R.drawable.logo).into(img, new Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//                        Bitmap bitmap = ((BitmapDrawable) img.getDrawable()).getBitmap();
+//                        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+//                            @Override
+//                            public void onGenerated(Palette palette) {
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError() {
+//                    }
+//                });
 
-                    @Override
-                    public void onError() {
-                    }
-                });
+
+
+                final ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
+
+                final Handler handler = new Handler();
+
+                Thread th = new Thread(new Runnable() {
+                    public void run() {
+
+                        try {
+
+                            long imageLength = 0;
+
+                            ImageManager.GetImage(gambar, imageStream, imageLength);
+
+                            handler.post(new Runnable() {
+
+                                public void run() {
+                                    byte[] buffer = imageStream.toByteArray();
+
+                                    Bitmap bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
+
+                                    img.setImageBitmap(bitmap);
+                                }
+                            });
+                        }
+                        catch(Exception ex) {
+                            final String exceptionMessage = ex.getMessage();
+                            handler.post(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), exceptionMessage, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }});
+                th.start();
+
+                Picasso.with(getApplicationContext()).load(Server.URL+"/"+gambar).placeholder(R.drawable.logo).into(img);
+
                 sin.setText(sinopsis);
                 jud.setText(nama_buku);
                 pen.setText(nama_penulis);

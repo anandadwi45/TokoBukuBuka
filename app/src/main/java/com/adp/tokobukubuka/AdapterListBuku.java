@@ -2,15 +2,21 @@ package com.adp.tokobukubuka;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,7 +39,7 @@ public class AdapterListBuku extends RecyclerView.Adapter<AdapterListBuku.ViewHo
 
 
     @Override
-    public void onBindViewHolder(AdapterListBuku.ViewHolder holder, int position) {
+    public void onBindViewHolder(final AdapterListBuku.ViewHolder holder, int position) {
         Glide.with(context)
                 .load(Server.URL+list_buku.get(position).get("gambar"))
                 .crossFade()
@@ -43,7 +49,45 @@ public class AdapterListBuku extends RecyclerView.Adapter<AdapterListBuku.ViewHo
         holder.txtpenulis.setText(list_buku.get(position).get("nama_penulis"));
         holder.txtharga.setText(list_buku.get(position).get("price"));
         holder.txtgenre.setText(list_buku.get(position).get("genre"));
-//        holder.txtid.setText(list_topevent.get(position).get("id"));
+
+//        final String image = PurchasedFragment.gambar.get(position);
+//
+//        final ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
+//
+//        final Handler handler = new Handler();
+//
+//        Thread th = new Thread(new Runnable() {
+//            public void run() {
+//
+//                try {
+//
+//                    long imageLength = 0;
+//
+//                    ImageManager.GetImage(image, imageStream, imageLength);
+//
+//                    handler.post(new Runnable() {
+//
+//                        public void run() {
+//                            byte[] buffer = imageStream.toByteArray();
+//
+//                            Bitmap bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
+//
+//                            holder.imgtop.setImageBitmap(bitmap);
+//                        }
+//                    });
+//                }
+//                catch(Exception ex) {
+//                    final String exceptionMessage = ex.getMessage();
+//                    handler.post(new Runnable() {
+//                        public void run() {
+//                            Toast.makeText(activity.getApplicationContext(), exceptionMessage, Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
+//            }});
+//        th.start();
+//
+//        Picasso.with(activity).load(Server.URL+"/"+PurchasedFragment.gambar.get(position)).placeholder(R.drawable.logo).into(holder.imgtop);
     }
 
 
