@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "625317253201",
+    "firebase_url": "https://tokobukubuka-8ea47.firebaseio.com",
+    "project_id": "tokobukubuka-8ea47",
+    "storage_bucket": "tokobukubuka-8ea47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625317253201:android:2b2232f89e3ce4e0d5e870",
+        "android_client_info": {
+          "package_name": "com.adp.tokobukubuka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625317253201-98ghto1q5tjqir13aqioomsk6d97b2ja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.adp.tokobukubuka",
+            "certificate_hash": "413f2a6ec3c436487b8bce6fdac1afecaf93ba75"
+          }
+        },
+        {
+          "client_id": "625317253201-lcqjpibf4v108u0kgfavi85nhs5alv9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC00pE6yIiNNQKR7Jhcj9RBGwrqsmhTYjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625317253201-lcqjpibf4v108u0kgfavi85nhs5alv9q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
